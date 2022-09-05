@@ -3,7 +3,7 @@ import Posts from '../../components/posts/Posts';
 import Sidebar from '../../components/sideBar/Sidebar';
 import './home.css';
 
-export default function Home() {
+function Home() {
   return (
     <>
       <Header />
@@ -14,3 +14,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;
