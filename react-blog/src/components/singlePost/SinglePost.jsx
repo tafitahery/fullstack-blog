@@ -1,16 +1,28 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './singlePost.css';
 
 export default function SinglePost() {
+  const { id } = useParams();
+
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const getPost = async () => {
+      const { data } = await axios.get('/posts/' + id);
+      setPost(data);
+    };
+    getPost();
+  }, [id]);
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img
-          src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          alt=""
-          className="singlePostImg"
-        />
+        {post.photo && (
+          <img src={post.photo} alt="" className="singlePostImg" />
+        )}
         <h1 className="singlePostTitle">
-          Lorem ipsum dolor sit amet.
+          {post.title}
           <div className="singlePostEdit">
             <i className="singlePostIcon fa-regular fa-pen-to-square"></i>
             <i className="singlePostIcon fa-regular fa-trash-can"></i>
@@ -18,31 +30,13 @@ export default function SinglePost() {
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Safak</b>
+            Author: <b>{post.username}</b>
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="singlePostDesc">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus non
-          doloremque laboriosam cumque atque, sit iste saepe obcaecati
-          architecto eligendi sequi, dolorum at error id ullam deserunt nihil
-          hic enim. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Natus non doloremque laboriosam cumque atque, sit iste saepe obcaecati
-          architecto eligendi sequi, dolorum at error id ullam deserunt nihil
-          hic enim. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Natus non doloremque laboriosam cumque atque, sit iste saepe obcaecati
-          architecto eligendi sequi, dolorum at error id ullam deserunt nihil
-          hic enim. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Natus non doloremque laboriosam cumque atque, sit iste saepe obcaecati
-          architecto eligendi sequi, dolorum at error id ullam deserunt nihil
-          hic enim. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Natus non doloremque laboriosam cumque atque, sit iste saepe obcaecati
-          architecto eligendi sequi, dolorum at error id ullam deserunt nihil
-          hic enim. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          Natus non doloremque laboriosam cumque atque, sit iste saepe obcaecati
-          architecto eligendi sequi, dolorum at error id ullam deserunt nihil
-          hic enim.
-        </p>
+        <p className="singlePostDesc">{post.desc}</p>
       </div>
     </div>
   );
