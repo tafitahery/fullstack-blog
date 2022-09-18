@@ -5,8 +5,8 @@ import './singlePost.css';
 
 export default function SinglePost() {
   const { id } = useParams();
-
   const [post, setPost] = useState({});
+  const PF = 'http://localhost:5000/images/';
 
   useEffect(() => {
     const getPost = async () => {
@@ -19,7 +19,7 @@ export default function SinglePost() {
     <div className="singlePost">
       <div className="singlePostWrapper">
         {post.photo && (
-          <img src={post.photo} alt="" className="singlePostImg" />
+          <img src={PF + post.photo} alt="" className="singlePostImg" />
         )}
         <h1 className="singlePostTitle">
           {post.title}
